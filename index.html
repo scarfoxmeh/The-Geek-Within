@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Geek Within</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+    header { background: #333; color: #fff; padding: 1rem; text-align: center; }
+    main { padding: 2rem; max-width: 900px; margin: auto; }
+    .search { margin-bottom: 1rem; }
+    .item { background: white; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .item img { max-width: 100%; height: auto; border-radius: 4px; }
+    .filters { margin-bottom: 1rem; }
+    .filters select, .filters input { margin-right: 0.5rem; padding: 0.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>The Geek Within</h1>
+    <p>Használt geek cuccok piaca – készpénz vagy utalás</p>
+  </header>
+  <main>
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Keresés név alapján...">
+      <select id="categoryFilter">
+        <option value="">Összes kategória</option>
+        <option value="játék">Játék</option>
+        <option value="figura">Figura</option>
+        <option value="retro">Retro</option>
+      </select>
+    </div>
+
+    <div id="items">
+      <div class="item" data-name="Super Mario figura" data-category="figura">
+        <h2>Super Mario figura</h2>
+        <img src="https://via.placeholder.com/300x200" alt="Super Mario figura">
+        <p>Ár: 3500 Ft</p>
+        <p>Állapot: Jó</p>
+        <p>Kapcsolat: andras@email.hu</p>
+      </div>
+
+      <div class="item" data-name="Retro Game Boy" data-category="retro">
+        <h2>Retro Game Boy</h2>
+        <img src="https://via.placeholder.com/300x200" alt="Retro Game Boy">
+        <p>Ár: 15000 Ft</p>
+        <p>Állapot: Használt, de működik</p>
+        <p>Kapcsolat: andras@email.hu</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const items = document.querySelectorAll('.item');
+
+    function filterItems() {
+      const search = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+
+      items.forEach(item => {
+        const name = item.getAttribute('data-name').toLowerCase();
+        const itemCategory = item.getAttribute('data-category');
+        const matchesSearch = name.includes(search);
+        const matchesCategory = !category || itemCategory === category;
+
+        if (matchesSearch && matchesCategory) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', filterItems);
+    categoryFilter.addEventListener('change', filterItems);
+  </script>
+</body>
+</html>
